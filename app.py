@@ -18,7 +18,7 @@ from settings import (
     LINK_DB_CONNECT_RETRIES,
     OSU_CLIENT_ID,
     OSU_CLIENT_SECRET,
-    OSU_REDIRECT_URL,
+    OSU_REDIRECT_URL_BASE,
 )
 from storage import close_pool, consume_link_code, create_link_code, get_pool, init_db
 from strings import select_locale, tr
@@ -30,7 +30,7 @@ APP.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="stat
 
 
 def require_config(request: Request, locale: str):
-    if OSU_CLIENT_ID and OSU_CLIENT_SECRET and OSU_REDIRECT_URL:
+    if OSU_CLIENT_ID and OSU_CLIENT_SECRET and OSU_REDIRECT_URL_BASE:
         return None
     return templates.TemplateResponse(
         "error.html",
@@ -106,7 +106,7 @@ async def auth(request: Request):
         "client_id": OSU_CLIENT_ID,
         "response_type": "code",
         "scope": "identify",
-        "redirect_uri": OSU_REDIRECT_URL,
+        "redirect_uri": OSU_REDIRECT_URL_BASE,
         "state": state,
     }
     url = "https://osu.ppy.sh/oauth/authorize?" + urlencode(params)
