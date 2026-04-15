@@ -7,7 +7,7 @@ OSU_REDIRECT_URL = os.getenv("OSU_OAUTH_REDIRECT_URL_BASE") + "/callback"
 BOT_LINK_COMMAND = os.getenv("BOT_LINK_COMMAND", "s link")
 
 LINK_DB_DSN = os.getenv("LINK_DB_DSN")
-LINK_DB_HOST = os.getenv("LINK_DB_HOST", "link_db")
+LINK_DB_HOST = os.getenv("LINK_DB_HOST", "osubot-link-db")
 LINK_DB_PORT = int(os.getenv("LINK_DB_PORT", "5432"))
 LINK_DB_NAME = os.getenv("LINK_DB_NAME", "osu_link")
 LINK_DB_USER = os.getenv("LINK_DB_USER", "osu_link")
