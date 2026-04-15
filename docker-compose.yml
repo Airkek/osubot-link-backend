@@ -1,4 +1,4 @@
-uservices:
+services:
   link_backend:
     build: .
     container_name: osu_link_backend
