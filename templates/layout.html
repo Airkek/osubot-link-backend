@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="{{ locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="logo">osu!</div>
+      <div>
+        <div class="title">{{ title }}</div>
+        {% if subtitle %}
+        <div class="subtitle">{{ subtitle }}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% block body %}{% endblock %}
+  </div>
+</body>
+</html>

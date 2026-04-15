@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div>
+  <div class="code-box">
+    <div class="code-label">{{ code_label }}</div>
+    <div class="code" id="code">{{ full_command }}</div>
+  </div>
+  <p class="note">{{ expires_text }}</p>
+  <p class="note">{{ username }}</p>
+  <div class="actions">
+    <button class="btn" id="copy-btn" data-copied="{{ copied_text }}">{{ copy_text }}</button>
+    <a class="btn secondary" href="/link">{{ back_text }}</a>
+  </div>
+</div>
+<script>
+  const btn = document.getElementById("copy-btn");
+  const code = document.getElementById("code").textContent;
+  btn.addEventListener("click", async () => {
+    const copied = btn.dataset.copied || "Copied";
+    try {
+      await navigator.clipboard.writeText(code);
+      const old = btn.textContent;
+      btn.textContent = copied;
+      setTimeout(() => btn.textContent = old, 1500);
+    } catch (e) {
+      btn.textContent = copied;
+    }
+  });
+</script>
+{% endblock %}

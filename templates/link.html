@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div>
+  {% if body_text %}
+  <p>{{ body_text }}</p>
+  {% endif %}
+  <div class="actions">
+    <a class="btn" href="/auth">{{ button_text }}</a>
+  </div>
+</div>
+{% endblock %}

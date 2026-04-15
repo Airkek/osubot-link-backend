@@ -1,0 +1,19 @@
+services:
+  link_backend:
+    build: .
+    container_name: osu_link_backend
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - link_db
+
+  link_db:
+    image: postgres:17-alpine
+    container_name: osu_link_db
+    environment:
+      POSTGRES_DB: ${LINK_DB_NAME}
+      POSTGRES_USER: ${LINK_DB_USER}
+      POSTGRES_PASSWORD: ${LINK_DB_PASSWORD}
+    volumes:
+      - ./link_db_data:/var/lib/postgresql/data
