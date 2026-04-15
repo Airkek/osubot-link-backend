@@ -8,6 +8,10 @@ services:
     depends_on:
       - link_db
     restart: unless-stopped
+    networks:
+      - osubot-network
+
+    
 
   link_db:
     image: postgres:17-alpine
@@ -19,3 +23,7 @@ services:
     volumes:
       - ./link_db_data:/var/lib/postgresql/data
     restart: unless-stopped
+
+networks:
+  osubot-network:
+    driver: bridge
