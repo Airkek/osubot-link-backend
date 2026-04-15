@@ -6,12 +6,12 @@ services:
     ports:
       - "9733:9733"
     depends_on:
-      - db
+      - osubot-link-db
     restart: unless-stopped
     networks:
       - osubot-network
 
-  db:
+  osubot-link-db:
     image: postgres:17-alpine
     container_name: osubot-link-backend-database
     environment:
@@ -21,6 +21,8 @@ services:
     volumes:
       - ./link_db_data:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - osubot-network
 
 networks:
   osubot-network:
