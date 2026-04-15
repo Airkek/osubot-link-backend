@@ -1,3 +1,5 @@
 .env
 __pycache__/
 link_db_data/
+
+docker-compose.override.yml

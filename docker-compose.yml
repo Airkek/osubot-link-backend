@@ -1,10 +1,10 @@
-services:
+uservices:
   link_backend:
     build: .
     container_name: osu_link_backend
     env_file: .env
     ports:
-      - "8000:8000"
+      - "9733:9733"
     depends_on:
       - link_db
 
