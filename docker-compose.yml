@@ -7,8 +7,7 @@ services:
       - "9733:9733"
     depends_on:
       - link_db
-    restart:
-      - unless-stopped
+    restart: unless-stopped
 
   link_db:
     image: postgres:17-alpine
@@ -19,5 +18,4 @@ services:
       POSTGRES_PASSWORD: ${LINK_DB_PASSWORD}
     volumes:
       - ./link_db_data:/var/lib/postgresql/data
-    restart:
-      - unless-stopped
+    restart: unless-stopped
