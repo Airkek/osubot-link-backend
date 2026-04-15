@@ -27,6 +27,6 @@ docker compose up --build
 Set these in the bot `.env`:
 
 ```
-OSU_LINK_API_URL=http://link_backend:9733
+OSU_LINK_API_URL=http://osubot-link-backend:9733
 OSU_LINK_PAGE_URL=https://link.example.com/link
 ```

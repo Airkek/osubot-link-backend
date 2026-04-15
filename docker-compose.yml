@@ -1,21 +1,19 @@
 services:
-  link_backend:
+  osubot-link-backend:
     build: .
-    container_name: osu_link_backend
+    container_name: osubot-link-backend
     env_file: .env
     ports:
       - "9733:9733"
     depends_on:
-      - link_db
+      - db
     restart: unless-stopped
     networks:
       - osubot-network
 
-    
-
-  link_db:
+  db:
     image: postgres:17-alpine
-    container_name: osu_link_db
+    container_name: osubot-link-backend-database
     environment:
       POSTGRES_DB: ${LINK_DB_NAME}
       POSTGRES_USER: ${LINK_DB_USER}
