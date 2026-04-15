@@ -162,7 +162,7 @@ async def callback(request: Request, code: Optional[str] = None, state: Optional
                     "grant_type": "authorization_code",
                     "client_id": OSU_CLIENT_ID,
                     "client_secret": OSU_CLIENT_SECRET,
-                    "redirect_uri": OSU_REDIRECT_URL,
+                    "redirect_uri": OSU_REDIRECT_URL_BASE + "/callback",
                     "code": code,
                 },
             )
