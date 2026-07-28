@@ -1,5 +1,48 @@
-.env
-__pycache__/
-link_db_data/
+# Version control and editor metadata
+.git/
+.github/
+.gitignore
+.dockerignore
+.idea/
+.vscode/
+*.swp
+*~
 
-docker-compose.override.yml
+# Local configuration and secrets
+.env
+.env.*
+
+# Python environments and bytecode
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+
+# Test, lint, and coverage caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Build and package output
+build/
+dist/
+*.egg-info/
+
+# Local runtime state
+link_db_data/
+*.log
+
+# Files used only to orchestrate or describe the image
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+README*
