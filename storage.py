@@ -62,6 +62,7 @@ async def init_db(pool: asyncpg.Pool) -> None:
             """
             CREATE TABLE IF NOT EXISTS link_codes (
                 code TEXT PRIMARY KEY,
+                server TEXT NOT NULL DEFAULT 'bancho',
                 user_id TEXT NOT NULL,
                 is_restrict BOOLEAN NOT NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -69,6 +70,7 @@ async def init_db(pool: asyncpg.Pool) -> None:
             )
             """
         )
+        await conn.execute("ALTER TABLE link_codes ADD COLUMN IF NOT EXISTS server TEXT NOT NULL DEFAULT 'bancho'")
         await conn.execute("CREATE INDEX IF NOT EXISTS idx_link_codes_created_at ON link_codes(created_at)")
 
 
@@ -81,7 +83,9 @@ async def purge_expired(conn: asyncpg.Connection) -> None:
     )
 
 
-async def create_link_code(user_id: str, is_restrict: bool, attempts: int = 10) -> Optional[str]:
+async def create_link_code(
+    user_id: str, is_restrict: bool, attempts: int = 10, *, server: str = "bancho"
+) -> Optional[str]:
     pool = await get_pool()
     async with pool.acquire() as conn:
         await purge_expired(conn)
@@ -89,14 +93,15 @@ async def create_link_code(user_id: str, is_restrict: bool, attempts: int = 10) 
             candidate = generate_code(8)
             row = await conn.fetchrow(
                 """
-                INSERT INTO link_codes (code, user_id, is_restrict)
-                VALUES ($1, $2, $3)
+                INSERT INTO link_codes (code, user_id, is_restrict, server)
+                VALUES ($1, $2, $3, $4)
                 ON CONFLICT DO NOTHING
                 RETURNING code
                 """,
                 candidate,
                 user_id,
                 is_restrict,
+                server,
             )
             if row:
                 return candidate
@@ -104,7 +109,7 @@ async def create_link_code(user_id: str, is_restrict: bool, attempts: int = 10) 
     return None
 
 
-async def consume_link_code(code: str) -> Optional[Tuple[str, bool]]:
+async def consume_link_code(code: str, server: str = "bancho") -> Optional[Tuple[str, bool]]:
     pool = await get_pool()
     async with pool.acquire() as conn:
         async with conn.transaction():
@@ -113,13 +118,14 @@ async def consume_link_code(code: str) -> Optional[Tuple[str, bool]]:
                 """
                 SELECT code, user_id, is_restrict, created_at, used_at
                 FROM link_codes
-                WHERE code = $1
+                WHERE code = $1 AND server = $2
                 FOR UPDATE
                 """,
                 code,
+                server,
             )
             if not row or row["used_at"] is not None:
                 return None
 
-            await conn.execute("UPDATE link_codes SET used_at = NOW() WHERE code = $1", code)
+            await conn.execute("UPDATE link_codes SET used_at = NOW() WHERE code = $1 AND server = $2", code, server)
             return row["user_id"], bool(row["is_restrict"])
