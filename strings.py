@@ -2,9 +2,9 @@ from fastapi import Request
 
 TEXT = {
     "en": {
-        "title": "Link your osu! account",
-        "subtitle": "Log in with osu! to get a one-time link code.",
-        "button": "Continue with osu!",
+        "title": "Link your account",
+        "subtitle": "Choose a server and sign in to get a one-time link code.",
+        "button": "Continue with {server}",
         "success_title": "Link code ready",
         "success_subtitle": "Send {command} {code} in any chat with the bot to link your account.",
         "code_label": "Command",
@@ -17,9 +17,9 @@ TEXT = {
         "back": "Back",
     },
     "ru": {
-        "title": "Привяжите аккаунт osu!",
-        "subtitle": "Войдите через osu!, чтобы получить одноразовый код привязки.",
-        "button": "Продолжить через osu!",
+        "title": "Привяжите аккаунт",
+        "subtitle": "Выберите сервер и войдите, чтобы получить одноразовый код привязки.",
+        "button": "Продолжить через {server}",
         "success_title": "Код привязки готов",
         "success_subtitle": "Отправьте {command} {code} в любом чате с ботом, чтобы привязать аккаунт.",
         "code_label": "Команда",

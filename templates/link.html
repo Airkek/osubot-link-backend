@@ -2,11 +2,10 @@
 
 {% block body %}
 <div>
-  {% if body_text %}
-  <p>{{ body_text }}</p>
-  {% endif %}
   <div class="actions">
-    <a class="btn" href="/auth">{{ button_text }}</a>
+    {% for server in servers %}
+    <a class="btn" href="{{ server.auth_url }}">{{ server.button_text }}</a>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

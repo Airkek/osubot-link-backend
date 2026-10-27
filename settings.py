@@ -1,10 +1,21 @@
 import os
 
-OSU_CLIENT_ID = os.getenv("OSU_OAUTH_CLIENT_ID")
-OSU_CLIENT_SECRET = os.getenv("OSU_OAUTH_CLIENT_SECRET")
-OSU_REDIRECT_URL = os.getenv("OSU_OAUTH_REDIRECT_URL_BASE") + "/callback"
+OSU_CLIENT_ID = os.getenv("OSU_OAUTH_CLIENT_ID", "").strip()
+OSU_CLIENT_SECRET = os.getenv("OSU_OAUTH_CLIENT_SECRET", "").strip()
+OSU_REDIRECT_URL_BASE = os.getenv("OSU_OAUTH_REDIRECT_URL_BASE", "").strip().rstrip("/")
+OSU_REDIRECT_URL = OSU_REDIRECT_URL_BASE + "/callback/bancho" if OSU_REDIRECT_URL_BASE else ""
+
+MORASOOMA_CLIENT_ID = os.getenv("MORASOOMA_OAUTH_CLIENT_ID", "").strip()
+MORASOOMA_CLIENT_SECRET = os.getenv("MORASOOMA_OAUTH_CLIENT_SECRET", "").strip()
+MORASOOMA_REDIRECT_URL_BASE = (
+    os.getenv("MORASOOMA_OAUTH_REDIRECT_URL_BASE", "").strip().rstrip("/") or OSU_REDIRECT_URL_BASE
+)
+MORASOOMA_REDIRECT_URL = (
+    MORASOOMA_REDIRECT_URL_BASE + "/callback/morasooma" if MORASOOMA_REDIRECT_URL_BASE else ""
+)
 
 BOT_LINK_COMMAND = os.getenv("BOT_LINK_COMMAND", "s link")
+MORASOOMA_BOT_LINK_COMMAND = os.getenv("MORASOOMA_BOT_LINK_COMMAND", "m link")
 
 LINK_DB_DSN = os.getenv("LINK_DB_DSN")
 LINK_DB_HOST = os.getenv("LINK_DB_HOST", "osubot-link-db")
